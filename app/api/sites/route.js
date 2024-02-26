@@ -20,7 +20,8 @@ export async function GET() {
         district, 
         ppcc, 
         address, 
-        codename  
+        codename,
+        type  
         from "Sites";
     `
     const client = await poolPG.connect()
