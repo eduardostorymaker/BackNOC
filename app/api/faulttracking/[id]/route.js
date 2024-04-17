@@ -14,7 +14,8 @@ export async function GET(request, { params }) {
         starttime, 
         endtime, 
         alarms, 
-        message 
+        message,
+        ticket 
          
         from "FaultTracking"
         where id = ${faultId};

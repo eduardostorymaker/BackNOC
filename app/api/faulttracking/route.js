@@ -9,12 +9,13 @@ const poolPG = PoolPG()
 export async function GET() {
     const query = `select 
             id, 
-            state, 
+            state,
             title, 
             starttime, 
             endtime, 
             alarms, 
-            message 
+            message,
+            ticket 
              
             from "FaultTracking";
         `
@@ -28,19 +29,27 @@ export async function POST (request) {
     try {
 
         const innerData = await request.json()
-        const {state, title, starttime, endtime, alarms, message} = innerData
+        // const {state, title, starttime, endtime, alarms, message, ticket} = innerData
         
-        if (!(state && title && starttime && endtime && alarms && message)) {
-            throw new Error("No se ingreso todos los parámetros")
-        }
+        // if (!(state && title && starttime && endtime && alarms && message && ticket)) {
+        //     throw new Error("No se ingreso todos los parámetros")
+        // }
             
         const query = {
-            text: `INSERT INTO "FaultTracking" (state,title,starttime,endtime,alarms,message)
-            VALUES ($1,$2,$3,$4,$5,$6)
+            text: `INSERT INTO "FaultTracking" (state,title,starttime,endtime,alarms,message,ticket)
+            VALUES ($1,$2,$3,$4,$5,$6,$7)
             RETURNING *
             ;
             `,
-            values: [state, title, starttime, endtime, alarms, message]
+            values: [
+                innerData.state||"",
+                innerData.title||"",
+                innerData.starttime||"",
+                innerData.endtime||"",
+                innerData.alarms||"",
+                innerData.message||"",
+                innerData.ticket||""
+            ]
         }
         
         const response = await tryToQueryPostgres(query,poolPG)
@@ -58,10 +67,9 @@ export async function PUT (request) {
 
     try {
         const innerData = await request.json()
-        const {id, state, title, starttime, endtime, alarms, message} = innerData
 
-        if (!(id && state && title && starttime && endtime && alarms && message)) {
-            throw new Error("No se ingreso todos los parámetros")
+        if (!(innerData.id)) {
+            throw new Error("No se ingreso el 'ID'")
         }
     
         const query = {
@@ -71,12 +79,22 @@ export async function PUT (request) {
             starttime = $4,
             endtime = $5,
             alarms = $6,
-            message = $7
+            message = $7,
+            ticket = $8
             WHERE ID = $1
             RETURNING *
             ;
             `,
-            values: [id,state, title, starttime, endtime, alarms, message]
+            values: [
+                innerData.id,
+                innerData.state||"",
+                innerData.title||"",
+                innerData.starttime||"",
+                innerData.endtime||"",
+                innerData.alarms||"",
+                innerData.message||"",
+                innerData.ticket||""
+            ]
         }
 
         const response = await tryToQueryPostgres(query,poolPG)
