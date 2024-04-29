@@ -38,7 +38,7 @@ export async function POST (request) {
             
         const query = {
             text: `INSERT INTO "FaultTracking" (state,title,starttime,endtime,alarms,message,ticket,notes)
-            VALUES ($1,$2,$3,$4,$5,$6,$7)
+            VALUES ($1,$2,$3,$4,$5,$6,$7,$8)
             RETURNING *
             ;
             `,
