@@ -15,7 +15,8 @@ export async function GET() {
             endtime, 
             alarms, 
             message,
-            ticket 
+            ticket,
+            notes 
              
             from "FaultTracking";
         `
@@ -36,7 +37,7 @@ export async function POST (request) {
         // }
             
         const query = {
-            text: `INSERT INTO "FaultTracking" (state,title,starttime,endtime,alarms,message,ticket)
+            text: `INSERT INTO "FaultTracking" (state,title,starttime,endtime,alarms,message,ticket,notes)
             VALUES ($1,$2,$3,$4,$5,$6,$7)
             RETURNING *
             ;
@@ -48,7 +49,8 @@ export async function POST (request) {
                 innerData.endtime||"",
                 innerData.alarms||"",
                 innerData.message||"",
-                innerData.ticket||""
+                innerData.ticket||"",
+                innerData.notes||""
             ]
         }
         
@@ -80,7 +82,8 @@ export async function PUT (request) {
             endtime = $5,
             alarms = $6,
             message = $7,
-            ticket = $8
+            ticket = $8,
+            notes = $9
             WHERE ID = $1
             RETURNING *
             ;
@@ -93,7 +96,8 @@ export async function PUT (request) {
                 innerData.endtime||"",
                 innerData.alarms||"",
                 innerData.message||"",
-                innerData.ticket||""
+                innerData.ticket||"",
+                innerData.notes||""
             ]
         }
 
