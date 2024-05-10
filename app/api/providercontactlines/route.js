@@ -36,6 +36,14 @@ export async function GET() {
 
 export async function PUT (request) {
     try {
+
+        const actionToDo = {
+            add: "add",
+            delete: "delete",
+            modified: "modified",
+            none: "none" 
+        }
+        
         const dataToUpdate = await request.json()
 
         const begin = "BEGIN;"
@@ -55,14 +63,43 @@ export async function PUT (request) {
             `
         } 
 
-        const updateLines = dataToUpdate.dataLines.reduce((a,v)=>{
+
+        const insertLinesFormat = (priority,line) => {
+            return `
+            INSERT INTO "ProviderContactLines" (priority, line, providercontact)
+            VALUES (${priority},'${line}',${parseInt(dataToUpdate.dataProvider.id)});
+            `
+        } 
+
+        const deleteLinesFormat = (id) => {
+            return `
+            delete from "ProviderContactLines"
+            where id = ${parseInt(id)};
+
+            `
+        } 
+
+        const isThereUpdate = dataToUpdate.dataLines.filter(item => item.todo === actionToDo.modified)
+        const isThereAdd = dataToUpdate.dataLines.filter(item => item.todo === actionToDo.add)
+        const isThereDelete = dataToUpdate.dataLines.filter(item => item.todo === actionToDo.delete)
+        console.log("isThereUpdate")
+        console.log(isThereUpdate)
+        const updateLines = isThereUpdate?isThereUpdate.reduce((a,v)=>{
             return a+updateLinesFormat(v.id,v.priority,v.line)
-        },"")
+        },""):""
+
+        const addLines = isThereAdd?isThereAdd.reduce((a,v)=>{
+            return a+insertLinesFormat(v.priority,v.line)
+        },""):""
+
+        const deleteLines = isThereDelete?isThereDelete.reduce((a,v)=>{
+            return a+deleteLinesFormat(v.id)
+        },""):""
 
         const commit = "COMMIT;"
 
 
-        const query = begin + updateProvider + updateLines + commit
+        const query = begin + updateProvider + updateLines + addLines + deleteLines + commit
 
         console.log(query)
 
