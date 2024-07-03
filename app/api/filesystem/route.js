@@ -13,6 +13,32 @@ export async function GET(request,response) {
     // console.log("iniciando del Request2 #############################################################################")
     // const formData = await request.formData();
     // console.log(formData)
+
+
+
+    const rutaDiscoC = 'C:\\Datos\\';
+
+// Lee el contenido de la ruta
+console.log("intentando leer la ruta")
+fs.readdir(rutaDiscoC, (err, archivos) => {
+  if (err) {
+    console.error('Error al leer la ruta:', err);
+    return;
+  }
+
+  // Filtra solo las carpetas
+  const carpetas = archivos.filter(nombre => {
+    const rutaCompleta = `${rutaDiscoC}${nombre}`;
+    return fs.statSync(rutaCompleta).isDirectory();
+  });
+
+  console.log('Carpetas en la ruta del disco C:');
+  carpetas.forEach(carpetas => {
+    console.log(carpetas);
+  });
+});
+
+
     try{
         const filename = "7_2_2024_13_47_6_pruebaxls.xlsx"
         //const filePath = `./public/file/${filename}`
@@ -52,7 +78,7 @@ export async function POST(req,res) {
         console.log(file)
         console.log(path)
         console.log(name)
-        const fullPath = `/C:/Datos/NOC/Developments/Backend/BackNOC/public/${path}`
+        const fullPath = `C:\\Datos\\Servers\\nginx-1.26.1\\html\\images\\${path}`
 
         await fs.promises.access(fullPath, fs.constants.F_OK)
             .catch(async () => {
