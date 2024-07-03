@@ -52,7 +52,7 @@ export async function POST(req,res) {
         console.log(file)
         console.log(path)
         console.log(name)
-        const fullPath = `./public/${path}`
+        const fullPath = `/C:/Datos/NOC/Developments/Backend/BackNOC/public/${path}`
 
         await fs.promises.access(fullPath, fs.constants.F_OK)
             .catch(async () => {
