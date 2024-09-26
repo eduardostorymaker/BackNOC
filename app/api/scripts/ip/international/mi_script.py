@@ -260,8 +260,8 @@ class Spidernet:
                         interface["kind"] = "trunk"
                     elif "GigabitEthernet" in line:
                         interface["kind"] = "10"
-                    elif "50|100GE" in line:
-                        interface["kind"] = "50|100"
+                    # elif "50|100GE" in line:
+                    #     interface["kind"] = "50|100"
                     elif "100GE" in line:
                         interface["kind"] = "100"
 
