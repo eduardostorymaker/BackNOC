@@ -26,10 +26,7 @@ export async function POST (req, res) {
         const dataToUpdate = await req.json()
         const device_username = dataToUpdate.du?desencriptar(dataToUpdate.du):"C15380"
         const device_password = dataToUpdate.dp?desencriptar(dataToUpdate.dp):"Claro4499$$"
-        // const device_username = "C15380"
-        // const device_password = "Claro4499$$"
-        console.log("device_username,device_password")
-        console.log(device_username,device_password)
+
         const { stdout } = await execPromise(`python ./app/api/scripts/ip/international/mi_script.py ${device_username} ${device_password}`); 
         //res.status(200).json({ output: stdout });
         return responseFormat({ output: stdout },200,false)
