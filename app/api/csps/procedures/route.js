@@ -3,6 +3,7 @@ export const dynamic = 'force-dynamic'
 import PoolPG from "../../../lib/PoolPG";
 import tryToQueryPostgres from "../../../lib/tryToQueryPostgres"
 import responseFormat from "../../../lib/nextResponseFormat";
+import { NextResponse } from "next/server";
 
 const poolPG = PoolPG()
 
