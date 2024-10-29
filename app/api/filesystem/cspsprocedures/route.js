@@ -1,4 +1,4 @@
-import {NextResponse} from "next/server";
+import { NextResponse } from "next/server";
 import fs from 'fs';
 const path = require('path');
 import { pipeline } from 'stream';
@@ -96,4 +96,15 @@ export async function POST(req,res) {
     catch (e) {
         return  NextResponse.json({status:"fail",data:e})
     }
+}
+
+export async function OPTIONS(request) {
+    return NextResponse.json(null, {
+        status: 200,
+        headers: {
+            'Access-Control-Allow-Origin': '*', // Cambia '*' por tu dominio específico si es necesario
+            'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS, UPDATE',
+            'Access-Control-Allow-Headers': 'Content-Type, Authorization'
+        }
+    });
 }
