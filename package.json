@@ -6,9 +6,17 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@azure/app-configuration": "^1.8.0",
+    "@azure/identity": "^4.6.0",
+    "@azure/keyvault-secrets": "^4.9.0",
+    "jsonwebtoken": "^9.0.2",
     "next": "^14.1.0",
+    "oci-common": "^2.102.0",
+    "oci-objectstorage": "^2.102.0",
+    "oci-secrets": "^2.102.0",
+    "oracledb": "^6.7.1",
+    "pg": "^8.11.3",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "pg": "^8.11.3"
+    "react-dom": "^18.2.0"
   }
 }

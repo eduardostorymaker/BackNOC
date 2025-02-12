@@ -352,7 +352,7 @@ class Spidernet:
                         raise ValueError("Deteniendo la ejecución en este router")
                 self.server_client.close()
 
-                engine = create_engine('postgresql+psycopg2://postgres:Subida20@172.19.128.128:5432/NOC')
+                engine = create_engine('postgresql+psycopg2://postgres:Claro20@172.19.128.128:5432/NOC')
                 inteface_list_to_upload.to_sql('Ip_InternationalLinksFromScript', engine, if_exists='replace', index=False)
                 print("successfully executed")
             else:
